@@ -35,11 +35,11 @@ pub async fn get_listening_ports() -> Result<Vec<PortInfo>> {
 }
 
 async fn get_tcp_listening_ports() -> Result<Vec<PortInfo>> {
-    get_listening_ports_by_protocol(libc::IPPROTO_TCP as u8, "tcp".to_string()).await
+    get_listening_ports_by_protocol(libc::IPPROTO_TCP as u8, String::from("tcp")).await
 }
 
 async fn get_udp_listening_ports() -> Result<Vec<PortInfo>> {
-    get_listening_ports_by_protocol(libc::IPPROTO_UDP as u8, "udp".to_string()).await
+    get_listening_ports_by_protocol(libc::IPPROTO_UDP as u8, String::from("udp")).await
 }
 
 async fn get_listening_ports_by_protocol(
@@ -98,7 +98,7 @@ async fn get_listening_ports_by_protocol(
                         if port > 0 {
                             ports.insert(PortInfo {
                                 port,
-                                protocol: protocol_name.to_string(),
+                                protocol: protocol_name.clone(),
                             });
                         }
                     }
