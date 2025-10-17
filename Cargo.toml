@@ -1,0 +1,45 @@
+[workspace]
+resolver = "2"
+members = [
+    "devcon-client",
+    "devcon-remote",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["devcon contributors"]
+license = "MIT"
+repository = "https://github.com/scaryrawr/devcon"
+
+[workspace.dependencies]
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+
+# HTTP server and REST API
+axum = "0.7"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["fs", "trace", "cors"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# SSE support
+tokio-stream = "0.1"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# System libraries
+libc = "0.2"
+
+# Netlink support (for devcon-remote)
+netlink-packet-core = "0.7"
+netlink-packet-sock-diag = "0.4"
+netlink-sys = "0.8"
