@@ -35,16 +35,16 @@ pub async fn get_listening_ports() -> Result<Vec<PortInfo>> {
 }
 
 async fn get_tcp_listening_ports() -> Result<Vec<PortInfo>> {
-    get_listening_ports_by_protocol(libc::IPPROTO_TCP as u8, String::from("tcp")).await
+    get_listening_ports_by_protocol(libc::IPPROTO_TCP as u8, "tcp").await
 }
 
 async fn get_udp_listening_ports() -> Result<Vec<PortInfo>> {
-    get_listening_ports_by_protocol(libc::IPPROTO_UDP as u8, String::from("udp")).await
+    get_listening_ports_by_protocol(libc::IPPROTO_UDP as u8, "udp").await
 }
 
 async fn get_listening_ports_by_protocol(
     protocol: u8,
-    protocol_name: String,
+    protocol_name: &'static str,
 ) -> Result<Vec<PortInfo>> {
     tokio::task::spawn_blocking(move || {
         let mut socket =
@@ -98,7 +98,7 @@ async fn get_listening_ports_by_protocol(
                         if port > 0 {
                             ports.insert(PortInfo {
                                 port,
-                                protocol: protocol_name.clone(),
+                                protocol: protocol_name.to_string(),
                             });
                         }
                     }
